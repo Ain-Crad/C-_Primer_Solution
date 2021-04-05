@@ -1,0 +1,36 @@
+#ifndef _EXR_13_44_H
+#define _EXR_13_44_H
+
+#include <iostream>
+#include <memory>
+#include <cstring>
+#include <algorithm>
+
+class String
+{
+    friend std::ostream &print(std::ostream &, String &);
+
+public:
+    String() : element(nullptr), first_free(nullptr), cap(nullptr) {}
+    String(const char *s);
+    String(const String &);
+    String &operator=(const String &);
+    ~String();
+
+    size_t size() const { return first_free - element; }
+    char *begin() const { return element; }
+    char *end() const { return first_free; }
+    void free();
+
+private:
+    static std::allocator<char> alloc;
+    char *element;
+    char *first_free;
+    char *cap;
+
+    std::pair<char *, char *> alloc_n_copy(const String &);
+};
+
+std::ostream &print(std::ostream &, String &);
+
+#endif

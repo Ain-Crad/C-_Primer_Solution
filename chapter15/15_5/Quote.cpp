@@ -1,0 +1,2 @@
+#include "Quote.h"
+
